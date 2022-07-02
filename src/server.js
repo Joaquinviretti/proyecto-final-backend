@@ -1,8 +1,10 @@
 // express
 const express = require('express');
 const app = express();
+const cors = require('cors');
+app.use(cors());
 
-//
+//fs
 const fs = require('fs');
 
 //http
@@ -57,6 +59,12 @@ api.add({
     price: 50
 })
 
+api.add({
+    title: "prueba2",
+    thumbnail: "https://picsum.photos/200",
+    price: 60
+})
+
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, '..', './views'))
 
@@ -74,9 +82,7 @@ let validarId = (req, res, next) => {
 
 // GET Table
 router.get('/', (req, res) => {
-    res.render('productos', {
-        productos: api.getAll()
-    })
+    res.send(api.getAll())  
 })
 
 // GET Form
