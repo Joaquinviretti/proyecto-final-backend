@@ -1,6 +1,28 @@
 const AddForm = () => {
+
+    const addProduct = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target);
+        const product = {
+            title: formData.get('title'),
+            price: formData.get('price'),
+            thumbnail: formData.get('thumbnail')
+        }
+
+        fetch('http://localhost:8080/api/productos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
     return (
-        <form className="container">
+        <form onSubmit={addProduct} className="container">
             <div className="mb-3">
                 <label htmlFor="title" className="form-label">Title</label>
                 <input required type="text" name="title" className="form-control" id="title" />
